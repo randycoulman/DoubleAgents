@@ -59,10 +59,10 @@ sending one of the `#expect:*` or `#stub:*` API methods directly to a
 class, by sending `#doubleAgent` to the class, or by explicitly
 creating the `DoubleAgent`.
 
-    AClass expect: #aMessage [...]
-    AClass stub: #aMessage [...]
-    AClass doubleAgent
-    DoubleAgent of: AClass
+* `AClass expect: #aMessage [...]`
+* `AClass stub: #aMessage [...]`
+* `AClass doubleAgent`
+* `DoubleAgent of: AClass`
 
 * An in-place instance-side `DoubleAgent` is used for objects that are
 part of a more complex object structure where it is difficult to
@@ -74,10 +74,10 @@ instance-side `DoubleAgent` is created by sending one of the
 sending `#doubleAgent` to the instance, or by explicitly creating the
 `DoubleAgent`.
 
-    anInstance expect: #aMessage [...]
-    anInstance stub: #aMessage [..]
-    anInstance doubleAgent
-    DoubleAgent around: anInstance
+* `anInstance expect: #aMessage [...]`
+* `anInstance stub: #aMessage [..]`
+* `anInstance doubleAgent`
+* `DoubleAgent around: anInstance`
 
 * An in-place class-side `DoubleAgent` is similar to an in-place
 instance-side double, but is used for mocking or stubbing class-side
@@ -88,8 +88,8 @@ debugger.  An in-place class-side `DoubleAgent` is created by sending
 `#classSideDouble` to the class, or by explicitly creating the
 `DoubleAgent`.
 
-    aClass classSideDouble
-    DoubleAgent around: AClass
+* `aClass classSideDouble`
+* `DoubleAgent around: AClass`
 
 # Stubbing and Mocking Methods
 
