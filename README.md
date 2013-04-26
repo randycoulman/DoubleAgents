@@ -51,28 +51,43 @@ for a good summary of her advice.
 
 # Creating a DoubleAgent
 
-Normally, a DoubleAgent is created by sending one of the `#expect:*`
-or `#stub:*` API methods directly to a class (to create a fake
-instance of the class) or to an existing instance (to mock or stub a
-method "in-place").  It is also possible to create a `DoubleAgent`
-explicitly or by sending `#doubleAgent` to the class or instance.  To
-mock or stub a method on the class side of an object, it is necessary
-to send `#classSideDouble` to the class, or to use the explicit
-creation method.
+There are three kinds of `DoubleAgent`:
 
-    "Create a test-double instance"
+* A standalone `DoubleAgent` acts as an instance of its target class.
+This is the normal usage.  A standalone `DoubleAgent` is created by
+sending one of the `#expect:*` or `#stub:*` API methods directly to a
+class, by sending `#doubleAgent` to the class, or by explicitly
+creating the `DoubleAgent`.
+
     AClass expect: #aMessage [...]
     AClass stub: #aMessage [...]
     AClass doubleAgent
     DoubleAgent of: AClass
 
-    "Stub or mock methods on an existing instance"
+* An in-place instance-side `DoubleAgent` is used for objects that are
+part of a more complex object structure where it is difficult to
+inject a standalone `DoubleAgent` as a dependency.  It allows
+selective mocking and stubbing, where only a few methods are doubled
+and all other methods have their normal behavior.  An in-place
+instance-side `DoubleAgent` is created by sending one of the
+`#expect:*` or `#stub:*` API methods directly to the instance, by
+sending `#doubleAgent` to the instance, or by explicitly creating the
+`DoubleAgent`.
+
     anInstance expect: #aMessage [...]
     anInstance stub: #aMessage [..]
     anInstance doubleAgent
     DoubleAgent around: anInstance
 
-    "Stub or mock methods on a class"
+* An in-place class-side `DoubleAgent` is similar to an in-place
+instance-side double, but is used for mocking or stubbing class-side
+methods of a class.  Note that doubled methods on classes are global
+throughout the system, so use this facility with care.  For example,
+attempting to stub something like `Timer class>>after:do:` will hang the
+debugger.  An in-place class-side `DoubleAgent` is created by sending
+`#classSideDouble` to the class, or by explicitly creating the
+`DoubleAgent`.
+
     aClass classSideDouble
     DoubleAgent around: AClass
 
