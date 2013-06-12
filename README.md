@@ -184,7 +184,10 @@ that they clean up after themselves.  If an expectation is not met, a
   Only the first `BurnNotice` will be reported.  All cleanup actions
   will be performed even if a `BurnNotice` is raised, and even if a
   cleanup action raises an exception.  This method should be called
-  from the `tearDown` of your test class.
+  from the `tearDown` of your test class.  If your `tearDown` method
+  performs other actions that might fail, it is recommended that you
+  use an `#ensure:` block to guarantee that `Agency class>>tearDown`
+  is sent in all cases.
 
 * `Agency class>>setUp` verifies that the `Agency` was torn down
   correctly by the last test that used it.  If not, a `BurnNotice`
@@ -198,7 +201,10 @@ that they clean up after themselves.  If an expectation is not met, a
   that forward to the `Agency`.  You can have your test class inherit
   from `DoubleAgentTestCase` to ensure that the `Agency` is managed
   properly.  Make sure that your `setUp` and `tearDown` also send to
-  `super` in addition to their own actions.
+  `super` in addition to their own actions.  If your `tearDown` method
+  performs other actions that might fail, it is recommended that you
+  use an `#ensure:` block to guarantee that the superclass `tearDown`
+  is sent in all cases.
 
 * `Agency class>>verifyAfter: aBlock` wraps `aBlock` with `setUp` and
   `tearDown` calls.  This method is handy for a single test that uses
