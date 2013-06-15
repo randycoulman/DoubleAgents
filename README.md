@@ -123,6 +123,16 @@ To stub a method, use one of the following:
 
 These methods do nothing but return a value as outlined above.
 
+## Disallowing a Message
+
+Sometimes, it is desirable to explicitly state that a particular
+message will not be sent to an object.  To disallow a message send,
+use the following:
+
+* `disallow: aMessage`
+
+If a disallowed message is sent, a `BurnNotice` is raised.
+
 ## Defining Expectations for a Method
 
 In order to verify that a message is sent to an object, use one of the
