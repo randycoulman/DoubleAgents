@@ -163,10 +163,35 @@ If the arguments are important, use one of the following:
 
 The general forms are the `#expect:withArguments:*` methods; the
 others are provided as convenient shortcuts.  These methods check that
-`aMessage` was sent with arguments that are `#=` to those specified.
+`aMessage` was sent with arguments that are "congruent" to those specified.
 They do nothing else except return a value as outlined above.
 
-For more flexible argument checking, use one of the following:
+Argument congruency is implemented using the `#===` method provided by
+the [Threequals](https://github.com/randycoulman/Threequals) package.
+See that package for more details, but as a summary:
+
+* Objects that are `#=` are also `#===`.
+* A class is `#===` to an object that `#isKindOf:` the class.
+* A block is `#===` to an object if it evaluates to true when passed
+  the object.
+* An interval is `#===` to a number that is between the endpoints of
+  the interval, including the endpoints.
+* If Threequals-Regex is loaded, a regular expression is `#===` to a
+  string that matches it.
+
+Using `#===` allows for expectations like the following:
+
+```
+myDouble expect: #with:and:do:
+         with: (40 to: 42)
+         with: [:x | x even]
+         with: BlockClosure
+```
+
+This expectation will be satisfied if the arguments are some number
+between 40 and 42 inclusive, an even number, and a block.
+
+For even more flexible argument checking, use one of the following:
 
 * `expect: aMessage where: aBlock`
 * `expect: aMessage where: aBlock return: anObject`
