@@ -123,6 +123,43 @@ To stub a method, use one of the following:
 
 These methods do nothing but return a value as outlined above.
 
+If the arguments are important, use one of the following:
+
+* `stub: aMessage with: anObject`
+* `stub: aMessage with: anObject with: anotherObject`
+* `stub: aMessage with: anObject with: anotherObject with: aThirdObject`
+* `stub: aMessage withArguments: aCollection`
+* `stub: aMessage with: anObject return: anObject`
+* `stub: aMessage with: anObject with: anotherObject return: anObject`
+* `stub: aMessage with: anObject with: anotherObject with: aThirdObject return: anObject`
+* `stub: aMessage withArguments: aCollection return: anObject`
+* `stub: aMessage with: anObject do: aBlock`
+* `stub: aMessage with: anObject with: anotherObject do: aBlock`
+* `stub: aMessage with: anObject with: anotherObject with: aThirdObject do: aBlock`
+* `stub: aMessage withArguments: aCollection do: aBlock`
+
+The general forms are the `#stub:withArguments:*` methods; the others
+are provided as convenient shortcuts.  These stubs are used when
+`aMessage` is sent with arguments that are "congruent" (see below) to
+those specified.  They do nothing else except return a value as outlined above.
+
+For even more flexible argument checking, use one of the following:
+
+* `stub: aMessage where: aBlock`
+* `stub: aMessage where: aBlock return: anObject`
+* `stub: aMessage where: aBlock do: returnBlock`
+
+These stubs are used when `aMessage` is sent with arguments that
+satisfy `aBlock`.  `aBlock` must take some or all of the arguments and
+return a Boolean indicating whether the arguments are satisfactory.
+They do nothing else except return a value as outlined above.
+
+The argument-matching forms of the `#stub:*` methods are only
+useful when you need to respond differently to a stubbed message
+depending on one or more of the arguments.  This is needed
+occasionally, but only after careful consideration of other options.
+In general, you should prefer non-argument-matching forms above.
+
 ## Disallowing a Message
 
 Sometimes, it is desirable to explicitly state that a particular
@@ -163,8 +200,11 @@ If the arguments are important, use one of the following:
 
 The general forms are the `#expect:withArguments:*` methods; the
 others are provided as convenient shortcuts.  These methods check that
-`aMessage` was sent with arguments that are "congruent" to those specified.
-They do nothing else except return a value as outlined above.
+`aMessage` was sent with arguments that are "congruent" (see below) to
+those specified.  They do nothing else except return a value as
+outlined above.
+
+## Argument Congruency
 
 Argument congruency is implemented using the `#===` method provided by
 the [Threequals](https://github.com/randycoulman/Threequals) package.
