@@ -11,7 +11,7 @@ DoubleAgents' primary home is the
 Check there for the latest version.  It is also on
 [GitHub](https://github.com/randycoulman/DoubleAgents).
 
-DoubleAgents was developed in VW 7.9.1, but is compatible with VW 7.7
+DoubleAgents was developed in VW 7.10.1, but is compatible with VW 7.7
 and later.  If you find any incompatibilities with VW 7.7 or later,
 let me know (see below for contact information) or file an issue on
 GitHub.
@@ -38,8 +38,9 @@ can contain a mixture of stubbed methods and expectations.
 `DoubleAgent`s can be created directly and used in place of instances
 of other classes.  In addition, it is possible to stub or mock methods
 on existing instances (including class-side methods of existing
-classes).  In these latter two cases, all non-doubled methods will
-continue to function like normal.
+classes).  It is also possible to stub or mock methods on all
+instances of a class.  In these latter cases, all non-doubled
+methods will continue to function like normal.
 
 DoubleAgents was designed to support unit testing in the style
 recommended by [Sandi Metz](https://twitter.com/sandimetz) in her
@@ -51,7 +52,7 @@ for a good summary of her advice.
 
 # Creating a DoubleAgent
 
-There are three kinds of `DoubleAgent`:
+There are four kinds of `DoubleAgent`:
 
 * A standalone `DoubleAgent` acts as an instance of its target class.
 This is the normal usage.  A standalone `DoubleAgent` is created by
@@ -90,6 +91,18 @@ debugger.  An in-place class-side `DoubleAgent` is created by sending
 
 * `aClass classSideDouble`
 * `DoubleAgent around: AClass`
+
+* An any-instance `DoubleAgent` is used when it is necessary to mock
+or stub methods on instances of a class that are not directly visible
+to the test.  Any-instance doubles should be used very rarely, as they
+generally suggest that there is a more fundamental problem with the
+design of the code under test.  However, there are times when they are
+needed.  An any-instance `DoubleAgent` is created by sending
+`#anyInstanceDouble` to the class, or by explicitly creating the
+`DoubleAgent`.
+
+* `aClass anyInstanceDouble`
+* `DoubleAgent forAnyInstanceOf: AClass`
 
 # Stubbing and Mocking Methods
 
@@ -335,8 +348,9 @@ is sent to the object.
 # Understanding the Code
 
 `DoubleAgent` is the central class in this library.  It has subclasses
-that implement the three main types of agent: `StandaloneDouble`,
-`InPlaceInstanceDouble`, and `InPlaceClassDouble`.
+that implement the four main types of agent: `StandaloneDouble`,
+`InPlaceInstanceDouble`, `InPlaceClassDouble`, and
+`AnyInstanceDouble`.
 
 All `DoubleAgent`s register with the singleton `Agency`, which is
 responsible for verifying all mock expectations and cleaning up.
