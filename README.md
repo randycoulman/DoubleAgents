@@ -1,5 +1,7 @@
 # DoubleAgents
 
+![Maintenance Status](https://img.shields.io/badge/maintenance-active-green.svg)
+
 Create and use "test doubles" in unit tests.
 
 DoubleAgents is licensed under the MIT license.  See the copyright tab
